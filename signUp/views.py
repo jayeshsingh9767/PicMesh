@@ -6,7 +6,7 @@ from signUp.forms import SignUpForm
 
 
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'Picmesh/home.html')
 
 
 def signup(request):

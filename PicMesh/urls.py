@@ -23,7 +23,8 @@ from logout import views as viewLogout
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    # path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    path('', include('home.urls')),
     path('signup', viewSignUp.signup, name='signup'),
     path('logout', viewLogout.logout, name='logout'),
 ]
