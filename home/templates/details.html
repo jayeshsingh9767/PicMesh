@@ -2,5 +2,15 @@
 {% block title %}{{ photo_id }}{% endblock %}
 
 {% block content %}
-    <h1>Details for Photo id :{{ photo_id }}</h1>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'home/detailstyle.css' %}">
+  <h1 class='title' align="center">{{ photo.title }}</h1>
+  <img src="{{ photo.original_pic.url }}" alt="Image not Found">
+  <a href="#" class="but">Back</a>
+  <a href="#" class="but">Add to Collection</a>
+  <a href="#" class="but">Buy Copyrights</a>
+  <h2 align="center">Photographer : {{ photo.photographer }}</h2>
+  <div class="desc"><p>{{ photo.description }}</p>
+  </div>
+
 {% endblock %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse,get_object_or_404
 from .models import *
 from django.template import loader
 # Create your views here.
@@ -6,6 +6,7 @@ from django.template import loader
 
 def cat_name(cname):
     return cat.get(category_name=cname)
+
 
 
 all_photos = Photo.objects.all()
@@ -41,13 +42,14 @@ context = {
 
 def home(request):
     template = loader.get_template('home.html')
-
     return HttpResponse(template.render(context, request))
 
 
 def details(request, photo_id):
+    photo = get_object_or_404(Photo, pk=photo_id)
     template = loader.get_template('details.html')
     context['photo_id'] = photo_id
+    context['photo'] = photo
     return HttpResponse(template.render(context, request))
 
 
