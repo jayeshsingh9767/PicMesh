@@ -6,9 +6,11 @@
   <link rel="stylesheet" href="{% static 'home/detailstyle.css' %}">
   <h1 class='title' align="center">{{ photo.title }}</h1>
   <img src="{{ photo.original_pic.url }}" alt="Image not Found">
-  <a href="#" class="but">Back</a>
-  <a href="#" class="but">Add to Collection</a>
-  <a href="#" class="but">Buy Copyrights</a>
+  <div class="buttonPanel">
+    <a href="#" class="but" align="center">Back</a>
+    <a href="#" class="but" align="center">Add to Collection</a>
+    <a href="#" class="but" align="center">Buy Copyrights</a>
+  </div>
   <h2 align="center">Photographer : {{ photo.photographer }}</h2>
   <div class="desc"><p>{{ photo.description }}</p>
   </div>

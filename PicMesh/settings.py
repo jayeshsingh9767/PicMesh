@@ -131,3 +131,11 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 LOGIN_REDIRECT_URL = '/'
+
+# Adding TEMPLATE_CONTEXT_PROCESSORS to our Settings
+TEMPLATES[0]['OPTIONS']['context_processors'].append("home.context_processors.categories_processor")
+
+# Adding context_processors.py to our Settings
+TEMPLATE_CONTEXT_PROCESSORS = ("custom_app.context_processors.categories_processor", )
+
+

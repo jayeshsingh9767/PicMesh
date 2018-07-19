@@ -8,7 +8,6 @@ def cat_name(cname):
     return cat.get(category_name=cname)
 
 
-
 all_photos = Photo.objects.all()
 cat = Categories.objects.all()
 auther = Photographer.objects.all()
@@ -51,5 +50,13 @@ def details(request, photo_id):
     context['photo_id'] = photo_id
     context['photo'] = photo
     return HttpResponse(template.render(context, request))
+
+
+def categories(request, cat_id):
+    cat_obj = get_object_or_404(Categories, pk=cat_id)
+    template = loader.get_template('category.html')
+    context['catObject'] = cat_obj
+    return render(template.render(context, request))
+
 
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html lang="en">
 <head>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'Picmesh/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'PicMesh/style.css' %}" />
     <meta charset="UTF-8">
     <title>{% block title%}Title{% endblock %}</title>
 </head>
@@ -13,7 +13,7 @@
 
                 <ul class="mainMenu" id="menu">
                   <li class="menuItem" id="home"><a href="#">Home</a></li>
-                  <li class="menuItem" id="categories"><a href="#">Categories</a></li>
+                  <li class="menuItem" id="cat" onclick="document.getElementById('categories').style.display='block'"><a href="#">Categories</a></li>
                   <li class="menuItem" id="self"><a href="#">My Self<div id="downArrow">&#9660;</div></a>
                   <ul class="subMenu">
                       <a href=""></a>
@@ -30,6 +30,16 @@
                   </li></a>
                   <li class="menuItem" id="ContactMe"><a href="#">Contact Me</a></li>
                 </ul>
+                <div class="modal animate" id="categories" onclick="document.getElementById('categories').style.display='none'">
+                    <div class=insideCategories>
+                    <span onclick="document.getElementById('categories').style.display='none'" class="close" title="Close Modal">&times;</span>
+                    <div class="container">
+                      <!--<a href="" class="box a">{{ categories }}</a>-->
+                      {% for cate in categories %}
+                      <a href="" class="box">{{cate}}</a>
+                      {% endfor %}
+                    </div>
+                  </div>
             </header>
         </main>
         {% block content%}
