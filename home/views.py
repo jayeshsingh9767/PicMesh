@@ -54,9 +54,13 @@ def details(request, photo_id):
 
 def categories(request, cat_id):
     cat_obj = get_object_or_404(Categories, pk=cat_id)
+    cat_pics = Photo.objects.filter(category=cat_id)
     template = loader.get_template('category.html')
     context['catObject'] = cat_obj
-    return render(template.render(context, request))
+    context['catPics'] = cat_pics
+    return HttpResponse(template.render(context, request))
+
+
 
 
 

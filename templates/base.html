@@ -25,7 +25,7 @@
                       </a>
                       <a href="#" class="inner">
                         <li>Projects</li>
-                    </ul>
+                  </ul>
 
                   </li></a>
                   <li class="menuItem" id="ContactMe"><a href="#">Contact Me</a></li>
@@ -36,10 +36,11 @@
                     <div class="container">
                       <!--<a href="" class="box a">{{ categories }}</a>-->
                       {% for cate in categories %}
-                      <a href="" class="box">{{cate}}</a>
+                      <a href="/categories/{{cate.id}}" class="box">{{cate}}</a>
                       {% endfor %}
                     </div>
                   </div>
+                </div>
             </header>
         </main>
         {% block content%}

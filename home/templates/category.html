@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title  %}Category{% endblock %}
+
+{% block content %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'home/categorystyle.css' %}">
+
+  <h1 align="center">Check out some Photos from {{catObject}}</h1>
+  <div class="sidebar">
+    <h3>More Categories</h3>
+    {% for cate in cat %}
+      <a href="/categories/{{cate.id}}" class="sideLink">{{ cate }}</a><br>
+    {% endfor %}
+  </div>
+  <div id="line">
+
+  </div>
+  <div class="containerCat">
+    {% for photo in catPics %}
+    <a href="" class="boxCat"><img src="{{ photo.original_pic.url }}" alt="Image not found"></a>
+    {% endfor %}
+  </div>
+
+{% endblock %}
