@@ -5,10 +5,13 @@
   {% load static %}
   <link rel="stylesheet" href="{% static 'home/detailstyle.css' %}">
   <h1 class='title' align="center">{{ photo.title }}</h1>
-  <img src="{{ photo.original_pic.url }}" alt="Image not Found">
+<img src="{{ photo.original_pic.url }}" alt="Image not Found">
   <div class="buttonPanel">
     <a href="#" class="but" align="center">Back</a>
-    <a href="#" class="but" align="center">Add to Collection</a>
+    <form action="" method="post">
+      {% csrf_token %}
+      <input type="submit" class="but" name="submit" value="Add to Collection"></submit>
+    </form>
     <a href="#" class="but" align="center">Buy Copyrights</a>
   </div>
   <h2 align="center">Photographer : {{ photo.photographer }}</h2>

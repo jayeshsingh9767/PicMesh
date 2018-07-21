@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Collection{% endblock %}
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'home/collectionstyle.css'%}">
+    <h1 align="center">Hey {{ user }}, Here are your list of Collection</h1>
+
+    <div class="containerCol">
+    {% for col in col_pic %}
+        <a href="" class="boxCol"><img src="{{ col.original_pic.url }}" alt=""></a>
+    {% endfor %}
+    </div>
+{% endblock %}
+

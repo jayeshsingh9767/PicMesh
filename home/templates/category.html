@@ -17,7 +17,7 @@
   </div>
   <div class="containerCat">
     {% for photo in catPics %}
-    <a href="" class="boxCat"><img src="{{ photo.original_pic.url }}" alt="Image not found"></a>
+      <a href="/details/{{ photo.id }}" class="boxCat"><img src="{{ photo.original_pic.url }}" alt="Image not found"></a>
     {% endfor %}
   </div>
 

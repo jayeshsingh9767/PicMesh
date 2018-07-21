@@ -1,6 +1,7 @@
 from django.shortcuts import render,HttpResponse,get_object_or_404
 from .models import *
 from django.template import loader
+from django.db import IntegrityError
 # Create your views here.
 
 
@@ -45,6 +46,14 @@ def home(request):
 
 
 def details(request, photo_id):
+    if request.method == 'POST':
+        try:
+            p = Photo.objects.get(id=photo_id)
+            c = Collection(user=request.user, photo=p)
+            c.save()
+        except IntegrityError as e:
+            return HttpResponse('The Photo is Already Collection')
+
     photo = get_object_or_404(Photo, pk=photo_id)
     template = loader.get_template('details.html')
     context['photo_id'] = photo_id
@@ -60,6 +69,15 @@ def categories(request, cat_id):
     context['catPics'] = cat_pics
     return HttpResponse(template.render(context, request))
 
+
+def collection(request):
+    coll = Collection.objects.filter(user=request.user)
+    # col_pic = Photo.objects.filter(id=coll.user)
+    id = Collection.objects.values_list('photo', flat=True).filter(user=request.user)
+    col_pic = Photo.objects.filter(id__in=set(id))
+    template = loader.get_template('collection.html')
+    context['col_pic'] = col_pic
+    return HttpResponse(template.render(context, request))
 
 
 
