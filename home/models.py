@@ -44,12 +44,13 @@ class Categories(models.Model):
         return self.category_name
 
 
-class Collection(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    photo = models.OneToOneField('Photo', on_delete=models.CASCADE)
+class Coll(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, unique=False)
+    photo = models.ForeignKey('Photo', on_delete=models.CASCADE, unique=False)
 
     def __str__(self):
         return self.photo.title
+
 
 
 

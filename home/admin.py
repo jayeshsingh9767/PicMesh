@@ -5,4 +5,4 @@ from .models import *
 admin.site.register(Photo)
 admin.site.register(Photographer)
 admin.site.register(Categories)
-admin.site.register(Collection)
+admin.site.register(Coll)

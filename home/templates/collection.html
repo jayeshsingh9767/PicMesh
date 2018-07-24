@@ -9,7 +9,7 @@
 
     <div class="containerCol">
     {% for col in col_pic %}
-        <a href="" class="boxCol"><img src="{{ col.original_pic.url }}" alt=""></a>
+        <a href="/details/{{ col.id }}" class="boxCol"><img src="{{ col.original_pic.url }}" alt=""></a>
     {% endfor %}
     </div>
 {% endblock %}

@@ -46,18 +46,26 @@ def home(request):
 
 
 def details(request, photo_id):
-    if request.method == 'POST':
-        try:
-            p = Photo.objects.get(id=photo_id)
-            c = Collection(user=request.user, photo=p)
-            c.save()
-        except IntegrityError as e:
-            return HttpResponse('The Photo is Already Collection')
-
     photo = get_object_or_404(Photo, pk=photo_id)
+    collected_pic = Coll.objects.filter(user=request.user, photo=photo_id)
     template = loader.get_template('details.html')
     context['photo_id'] = photo_id
     context['photo'] = photo
+    if request.method == 'POST':
+        if not collected_pic:
+            p = Photo.objects.get(id=photo_id)
+            c = Coll(user=request.user, photo=p)
+            c.save()
+            context['button_text'] = 'Remove From Collection'
+            return HttpResponse(template.render(context, request))
+        else:
+            p = Photo.objects.get(id=photo_id)
+            Coll.objects.filter(user=request.user, photo=p).delete()
+            context['button_text'] = 'Add to Collection'
+            return HttpResponse(template.render(context, request))
+    context['button_text'] = 'Add to Collection'
+    if collected_pic:
+        context['button_text'] = 'Remove From Collection'
     return HttpResponse(template.render(context, request))
 
 
@@ -71,9 +79,9 @@ def categories(request, cat_id):
 
 
 def collection(request):
-    coll = Collection.objects.filter(user=request.user)
+    coll = Coll.objects.filter(user=request.user)
     # col_pic = Photo.objects.filter(id=coll.user)
-    id = Collection.objects.values_list('photo', flat=True).filter(user=request.user)
+    id = Coll.objects.values_list('photo', flat=True).filter(user=request.user)
     col_pic = Photo.objects.filter(id__in=set(id))
     template = loader.get_template('collection.html')
     context['col_pic'] = col_pic
