@@ -12,7 +12,27 @@
       {% csrf_token %}
       <input type="submit" class="but" name="submit" value="{{ button_text }}"></submit>
     </form>
-    <a href="#" class="but" align="center">Buy Copyrights</a>
+    <a href="#" class="but" align="center" onclick="document.getElementById('pay').style.display='block'">Buy Copyrights</a>
+
+    <div class="modal animate" id="pay">
+    <div class=insideModal>
+      <span onclick="document.getElementById('pay').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <p>You requested for buying Copyrights for this Photo <br>
+        press the 'Complete Payment' Button to Continue the Payment <br>
+        The Original Picture will Start Downloading Once Payment is Successfull
+      </p>
+      <form class="paymentForm" action="" method="post">
+        {% csrf_token %}
+        <input type="radio" id="creditCard" name="paymentType" value="1" required><label for="creditCard">Credit Card</label><br>
+        <input type="radio" id="debitCard" name="paymentType" value="2" required><label for="debitCard">Debit Card</label><br>
+        <input type="radio" id="netBank" name="paymentType" value="3" required><label for="netBank">Net Banking</label><br>
+        <input type="submit" id="paymentButton" name="buy" value="Complete Payment" onclick="window.open('/media/temp.zip')" download><br>
+      </form>
+
+      <p>Note: This is Dummy Payment Gateway for Testing Purpose.</p>
+    </div>
+  </div >
+
   </div>
   <h2 align="center">Photographer : {{ photo.photographer }}</h2>
   <div class="desc"><p>{{ photo.description }}</p>
