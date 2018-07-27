@@ -4,10 +4,38 @@
 
 {% block content %}
     {% load static %}
-    <link rel="stylesheet" href="{% static 'home/stylehome.css' %}">
+    <link rel="stylesheet" href="{% static 'home/stylehome.css' %}" onload="typeWriter()">
     {% if user.is_authenticated %}
-      Hi {{ user.username }}!<br>
+      <!-- Creating Banner -->
 
+      <div class="banner">
+
+      {% for photo in trending_pics %}
+        <div class="mySlides fade">
+        <div class="numbertext">1 / 3</div>
+        <img src="{{ photo.original_pic.url }}" alt="Image not found" style="width:100%">
+        <div class="text">Caption Text</div>
+      </div>
+      {% endfor %}
+
+
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+      </div>
+      <br>
+
+      <div style="text-align:center">
+        {% for i in trending_pics %}
+          <span class="dot" onclick="currentSlide({{ i.id }})"></span>
+        {% endfor %}
+      </div>
+
+
+      <!-- Creating Greet Text -->
+      <p id="TextEffect" align="center"> </p>
+
+      <!-- Creating Category Row -->
       <h1 class='category'>{{ cat_name_city }}</h1>
       <div class="row">
         {% for photo in city_pic %}
@@ -61,5 +89,21 @@
     {% else %}
       <p>You are not logged in</p>
       <a href="{% url 'login' %}">login</a>
+
 {% endif %}
+<!-- LinkingExternal Javascript -->
+  <script type="text/javascript">
+    var i = 0;
+    var txt = 'Hello {{ user.username }}, Welcome to Picmesh';
+    var speed = 150;
+
+    function typeWriter() {
+      if (i < txt.length) {
+        document.getElementById("TextEffect").innerHTML += txt.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      }
+    }
+  </script>
+<script src="{% static 'home/homescript.js' %}"></script>
 {% endblock %}

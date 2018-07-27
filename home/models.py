@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.aggregates import Count
+from random import randint
+
 
 # Create your models here.
 

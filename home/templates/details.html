@@ -5,7 +5,7 @@
   {% load static %}
   <link rel="stylesheet" href="{% static 'home/detailstyle.css' %}">
   <h1 class='title' align="center">{{ photo.title }}</h1>
-<img src="{{ photo.original_pic.url }}" alt="Image not Found">
+  <img src="{{ photo.original_pic.url }}" alt="Image not Found">
   <div class="buttonPanel">
     <a href="#" class="but" align="center">Back</a>
     <form action="" method="post">
@@ -26,7 +26,7 @@
         <input type="radio" id="creditCard" name="paymentType" value="1" required><label for="creditCard">Credit Card</label><br>
         <input type="radio" id="debitCard" name="paymentType" value="2" required><label for="debitCard">Debit Card</label><br>
         <input type="radio" id="netBank" name="paymentType" value="3" required><label for="netBank">Net Banking</label><br>
-        <input type="submit" id="paymentButton" name="buy" value="Complete Payment" onclick="window.open('/media/temp.zip')" download><br>
+        <input type="submit" id="paymentButton" name="buy" value="Complete Payment" onclick="window.open('{{ photo.original_pic.url }}')" download><br>
       </form>
 
       <p>Note: This is Dummy Payment Gateway for Testing Purpose.</p>
