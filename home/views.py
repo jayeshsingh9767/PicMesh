@@ -3,13 +3,12 @@ import zipfile
 from django.shortcuts import render,HttpResponse,get_object_or_404
 from .models import *
 from django.template import loader
-import random
+from django.contrib.auth import get_user
 # Create your views here.
 
 
 def cat_name(cname):
     return cat.get(category_name=cname)
-
 
 all_photos = Photo.objects.all()
 cat = Categories.objects.all()
@@ -51,29 +50,30 @@ def home(request):
 
 
 def details(request, photo_id):
-    photo = get_object_or_404(Photo, pk=photo_id)
-    collected_pic = Coll.objects.filter(user=request.user, photo=photo_id)
     template = loader.get_template('details.html')
-    context['photo_id'] = photo_id
-    context['photo'] = photo
-    if request.method == 'POST':
-        if not collected_pic:
-            p = Photo.objects.get(id=photo_id)
-            c = Coll(user=request.user, photo=p)
-            c.save()
+    if request.user.is_authenticated:
+        photo = get_object_or_404(Photo, pk=photo_id)
+        collected_pic = Coll.objects.filter(user=request.user, photo=photo_id)
+        context['photo_id'] = photo_id
+        context['photo'] = photo
+        if request.method == 'POST':
+            if not collected_pic:
+                p = Photo.objects.get(id=photo_id)
+                c = Coll(user=request.user, photo=p)
+                c.save()
+                context['button_text'] = 'Remove From Collection'
+                return HttpResponse(template.render(context, request))
+            else:
+                p = Photo.objects.get(id=photo_id)
+                Coll.objects.filter(user=request.user, photo=p).delete()
+                context['button_text'] = 'Add to Collection'
+                return HttpResponse(template.render(context, request))
+        context['button_text'] = 'Add to Collection'
+        if collected_pic:
             context['button_text'] = 'Remove From Collection'
-            return HttpResponse(template.render(context, request))
-        else:
-            p = Photo.objects.get(id=photo_id)
-            Coll.objects.filter(user=request.user, photo=p).delete()
-            context['button_text'] = 'Add to Collection'
-            return HttpResponse(template.render(context, request))
-    context['button_text'] = 'Add to Collection'
-    if collected_pic:
-        context['button_text'] = 'Remove From Collection'
-
-
-    return HttpResponse(template.render(context, request))
+        return HttpResponse(template.render(context, request))
+    else:
+        return HttpResponse(template.render(context, request))
 
 
 def categories(request, cat_id):
@@ -86,13 +86,19 @@ def categories(request, cat_id):
 
 
 def collection(request):
-    coll = Coll.objects.filter(user=request.user)
-    # col_pic = Photo.objects.filter(id=coll.user)
-    ids = Coll.objects.values_list('photo', flat=True).filter(user=request.user)
-    col_pic = Photo.objects.filter(id__in=set(ids))
     template = loader.get_template('collection.html')
-    context['col_pic'] = col_pic
-    return HttpResponse(template.render(context, request))
+    if request.user.is_authenticated:
+        coll = Coll.objects.filter(user=request.user)
+        # col_pic = Photo.objects.filter(id=coll.user)
+        ids = Coll.objects.values_list('photo', flat=True).filter(user=request.user)
+        col_pic = Photo.objects.filter(id__in=set(ids))
+
+        context['col_pic'] = col_pic
+        return HttpResponse(template.render(context, request))
+    else:
+        return HttpResponse(template.render(context, request))
+
+
 
 
 

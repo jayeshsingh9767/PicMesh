@@ -12,9 +12,9 @@
 
       {% for photo in trending_pics %}
         <div class="mySlides fade">
-        <div class="numbertext">1 / 3</div>
-        <img src="{{ photo.original_pic.url }}" alt="Image not found" style="width:100%">
-        <div class="text">Caption Text</div>
+        <div class="numbertext">{{ forloop.counter }} / 5</div>
+        <a href="details/{{ photo.id }}"><img src="{{ photo.original_pic.url }}" alt="Image not found" style="width:100%"></a>
+        <div class="text">{{ photo.title }}</div>
       </div>
       {% endfor %}
 

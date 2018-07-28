@@ -26,5 +26,5 @@ function showSlides(n) {
 }
 
 setInterval(function() {
-  plusSlides(-1);
+  plusSlides(1);
 }, 5000);

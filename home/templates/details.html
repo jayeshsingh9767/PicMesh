@@ -4,38 +4,43 @@
 {% block content %}
   {% load static %}
   <link rel="stylesheet" href="{% static 'home/detailstyle.css' %}">
-  <h1 class='title' align="center">{{ photo.title }}</h1>
-  <img src="{{ photo.original_pic.url }}" alt="Image not Found">
-  <div class="buttonPanel">
-    <a href="#" class="but" align="center">Back</a>
-    <form action="" method="post">
-      {% csrf_token %}
-      <input type="submit" class="but" name="submit" value="{{ button_text }}"></submit>
-    </form>
-    <a href="#" class="but" align="center" onclick="document.getElementById('pay').style.display='block'">Buy Copyrights</a>
+  {% if user.is_authenticated %}
+      <h1 class='title' align="center">{{ photo.title }}</h1>
+      <img src="{{ photo.original_pic.url }}" alt="Image not Found">
+      <div class="buttonPanel">
+        <a href="#" class="but" align="center">Back</a>
+        <form action="" method="post">
+          {% csrf_token %}
+          <input type="submit" class="but" name="submit" value="{{ button_text }}"></submit>
+        </form>
+        <a href="#" class="but" align="center" onclick="document.getElementById('pay').style.display='block'">Buy Copyrights</a>
 
-    <div class="modal animate" id="pay">
-    <div class=insideModal>
-      <span onclick="document.getElementById('pay').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <p>You requested for buying Copyrights for this Photo <br>
-        press the 'Complete Payment' Button to Continue the Payment <br>
-        The Original Picture will Start Downloading Once Payment is Successfull
-      </p>
-      <form class="paymentForm" action="" method="post">
-        {% csrf_token %}
-        <input type="radio" id="creditCard" name="paymentType" value="1" required><label for="creditCard">Credit Card</label><br>
-        <input type="radio" id="debitCard" name="paymentType" value="2" required><label for="debitCard">Debit Card</label><br>
-        <input type="radio" id="netBank" name="paymentType" value="3" required><label for="netBank">Net Banking</label><br>
-        <input type="submit" id="paymentButton" name="buy" value="Complete Payment" onclick="window.open('{{ photo.original_pic.url }}')" download><br>
-      </form>
+        <div class="modal animate" id="pay">
+        <div class=insideModal>
+          <span onclick="document.getElementById('pay').style.display='none'" class="close" title="Close Modal">&times;</span>
+          <p>You requested for buying Copyrights for this Photo <br>
+            press the 'Complete Payment' Button to Continue the Payment <br>
+            The Original Picture will Start Downloading Once Payment is Successfull
+          </p>
+          <form class="paymentForm" action="" method="post">
+            {% csrf_token %}
+            <input type="radio" id="creditCard" name="paymentType" value="1" required><label for="creditCard">Credit Card</label><br>
+            <input type="radio" id="debitCard" name="paymentType" value="2" required><label for="debitCard">Debit Card</label><br>
+            <input type="radio" id="netBank" name="paymentType" value="3" required><label for="netBank">Net Banking</label><br>
+            <input type="submit" id="paymentButton" name="buy" value="Complete Payment" onclick="window.open('{{ photo.original_pic.url }}')" download><br>
+          </form>
 
-      <p>Note: This is Dummy Payment Gateway for Testing Purpose.</p>
-    </div>
-  </div >
+          <p>Note: This is Dummy Payment Gateway for Testing Purpose.</p>
+        </div>
+      </div >
 
-  </div>
-  <h2 align="center">Photographer : {{ photo.photographer }}</h2>
-  <div class="desc"><p>{{ photo.description }}</p>
-  </div>
+      </div>
+      <h2 align="center">Photographer : {{ photo.photographer }}</h2>
+      <div class="desc"><p>{{ photo.description }}</p>
+      </div>
+  {% else %}
+      <p>You are not logged in</p>
+      <a href="{% url 'login' %}">login</a>
+  {% endif %}
 
 {% endblock %}

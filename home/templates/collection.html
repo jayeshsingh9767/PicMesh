@@ -5,12 +5,17 @@
 {% block content %}
     {% load static %}
     <link rel="stylesheet" href="{%static 'home/collectionstyle.css'%}">
-    <h1 align="center">Hey {{ user }}, Here are your list of Collection</h1>
+    {% if user.is_authenticated %}
+        <h1 align="center">Hey {{ user }}, Here are your list of Collection</h1>
 
-    <div class="containerCol">
-    {% for col in col_pic %}
-        <a href="/details/{{ col.id }}" class="boxCol"><img src="{{ col.original_pic.url }}" alt=""></a>
-    {% endfor %}
+        <div class="containerCol">
+        {% for col in col_pic %}
+            <a href="/details/{{ col.id }}" class="boxCol"><img src="{{ col.original_pic.url }}" alt=""></a>
+        {% endfor %}
     </div>
+   {% else %}
+      <p>You are not logged in</p>
+      <a href="{% url 'login' %}">login</a>
+    {% endif %}
 {% endblock %}
 
