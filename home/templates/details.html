@@ -4,17 +4,26 @@
 {% block content %}
   {% load static %}
   <link rel="stylesheet" href="{% static 'home/detailstyle.css' %}">
-  {% if user.is_authenticated %}
       <h1 class='title' align="center">{{ photo.title }}</h1>
       <img src="{{ photo.original_pic.url }}" alt="Image not Found">
       <div class="buttonPanel">
-        <a href="#" class="but" align="center">Back</a>
-        <form action="" method="post">
-          {% csrf_token %}
-          <input type="submit" class="but" name="submit" value="{{ button_text }}"></submit>
-        </form>
+        <a href="#" onclick="window.history.back();" class="but" align="center">Back</a>
+        {% if user.is_authenticated %}
+            <form action="" method="post">
+              {% csrf_token %}
+              <input type="submit" class="but" name="submit" value="{{ button_text }}"></submit>
+            </form>
+        {% else %}
+           <form action="/accounts/login/" method="get">
+            {% csrf_token %}
+            <input type="submit" class="but" name="submit" value="{{ button_text }}"></submit>
+           </form>
+        {% endif %}
+        {% if user.is_authenticated %}
         <a href="#" class="but" align="center" onclick="document.getElementById('pay').style.display='block'">Buy Copyrights</a>
-
+        {% else %}
+        <a href="/accounts/login/" class="but" align="center">Buy Copyrights</a>
+        {% endif %}
         <div class="modal animate" id="pay">
         <div class=insideModal>
           <span onclick="document.getElementById('pay').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -22,14 +31,12 @@
             press the 'Complete Payment' Button to Continue the Payment <br>
             The Original Picture will Start Downloading Once Payment is Successfull
           </p>
-          <form class="paymentForm" action="" method="post">
+          <form class="paymentForm"  method="get" action="">
             {% csrf_token %}
-            <input type="radio" id="creditCard" name="paymentType" value="1" required><label for="creditCard">Credit Card</label><br>
-            <input type="radio" id="debitCard" name="paymentType" value="2" required><label for="debitCard">Debit Card</label><br>
-            <input type="radio" id="netBank" name="paymentType" value="3" required><label for="netBank">Net Banking</label><br>
-            <input type="submit" id="paymentButton" name="buy" value="Complete Payment" onclick="window.open('{{ photo.original_pic.url }}')" download><br>
+            <a download="{{ photo.title }}" href="{{ photo.original_pic.url }}" title="{{ photo.title }}">
+               <input type="button" id="paymentButton" name="buy" value="Complete Payment"><br>
+            </a>
           </form>
-
           <p>Note: This is Dummy Payment Gateway for Testing Purpose.</p>
         </div>
       </div >
@@ -38,9 +45,6 @@
       <h2 align="center">Photographer : {{ photo.photographer }}</h2>
       <div class="desc"><p>{{ photo.description }}</p>
       </div>
-  {% else %}
-      <p>You are not logged in</p>
-      <a href="{% url 'login' %}">login</a>
-  {% endif %}
+
 
 {% endblock %}

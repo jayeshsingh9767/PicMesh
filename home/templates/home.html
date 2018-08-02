@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock %}
 
-
 {% block content %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'home/stylehome.css' %}" onload="typeWriter()">
-    {% if user.is_authenticated %}
+
       <!-- Creating Banner -->
 
       <div class="banner">
@@ -36,12 +35,12 @@
       <p id="TextEffect" align="center"> </p>
 
       <!-- Creating Category Row -->
-      <h1 class='category'>{{ cat_name_city }}</h1>
+     <h1 class='category'>{{ cat_name_city }}</h1>
       <div class="row">
         {% for photo in city_pic %}
           <a href=" /details/{{ photo.id }} "><img src="{{ photo.original_pic.url }}" alt="Image not Found" class="frame"></a>
         {% endfor %}
-        <a href="#"><div class="viewMore" alt="See More">&#x21e8;</div></a>
+        <a href="/categories/{{ cat_name_city.id }}"><div class="viewMore" alt="See More">&#x21e8;</div></a>
       </div>
 
       <h1 class='category'>{{ cat_name_nature }}</h1>
@@ -49,7 +48,7 @@
         {% for photo in nature_pic %}
           <a href="/details/{{ photo.id }}"><img src="{{ photo.original_pic.url }}" alt="Image not Found" class="frame"></a>
         {% endfor %}
-        <a href="#"><div class="viewMore">&#x21e8;</div></a>
+        <a href="/categories/{{ cat_name_nature.id }}"><div class="viewMore">&#x21e8;</div></a>
       </div>
 
       <h1 class='category'>{{ cat_name_animal }}</h1>
@@ -57,7 +56,7 @@
         {% for photo in animal_pic %}
           <a href="/details/{{ photo.id }}"><img src="{{ photo.original_pic.url }}" alt="Image not Found" class="frame"></a>
         {% endfor %}
-        <a href="#"><div class="viewMore">&#x21e8;</div></a>
+        <a href="/categories/{{ cat_name_animal.id }}"><div class="viewMore">&#x21e8;</div></a>
       </div>
 
       <h1 class='category'>{{ cat_name_brand }}</h1>
@@ -65,7 +64,7 @@
         {% for photo in brand_pic %}
           <a href="/details/{{ photo.id }}"><img src="{{ photo.original_pic.url }}" alt="Image not Found" class="frame"></a>
         {% endfor %}
-        <a href="#"><div class="viewMore">&#x21e8;</div></a>
+        <a href="/categories/{{ cat_name_brand.id }}"><div class="viewMore">&#x21e8;</div></a>
       </div>
 
       <h1 class='category'>{{ cat_name_mountain }}</h1>
@@ -73,7 +72,7 @@
         {% for photo in mountain_pic %}
           <a href="/details/{{ photo.id }}"><img src="{{ photo.original_pic.url }}" alt="Image not Found" class="frame"></a>
         {% endfor %}
-        <a href="#"><div class="viewMore">&#x21e8;</div></a>
+        <a href="/categories/{{ cat_name_mountain.id }}"><div class="viewMore">&#x21e8;</div></a>
       </div>
 
       <h1 class='category'>{{ cat_name_devotion }}</h1>
@@ -81,29 +80,10 @@
         {% for photo in devotion_pic %}
           <a href="/details/{{ photo.id }}"><img src="{{ photo.original_pic.url }}" alt="Image not Found" class="frame"></a>
         {% endfor %}
-        <a href="#"><div class="viewMore">&#x21e8;</div></a>
+        <a href="/categories/{{ cat_name_devotion.id }}"><div class="viewMore">&#x21e8;</div></a>
       </div>
 
-
-      <a href="{% url 'logout' %}">logout</a>
-    {% else %}
-      <p>You are not logged in</p>
-      <a href="{% url 'login' %}">login</a>
-
-{% endif %}
 <!-- LinkingExternal Javascript -->
-  <script type="text/javascript">
-    var i = 0;
-    var txt = 'Hello {{ user.username }}, Welcome to Picmesh';
-    var speed = 150;
 
-    function typeWriter() {
-      if (i < txt.length) {
-        document.getElementById("TextEffect").innerHTML += txt.charAt(i);
-        i++;
-        setTimeout(typeWriter, speed);
-      }
-    }
-  </script>
 <script src="{% static 'home/homescript.js' %}"></script>
 {% endblock %}

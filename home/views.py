@@ -46,16 +46,20 @@ context = {
 
 def home(request):
     template = loader.get_template('home.html')
-    return HttpResponse(template.render(context, request))
+    if request.user.is_authenticated:
+        return HttpResponse(template.render(context, request))
+    else:
+        return HttpResponse(template.render(context, request))
 
 
 def details(request, photo_id):
     template = loader.get_template('details.html')
+    photo = get_object_or_404(Photo, pk=photo_id)
+    context['photo_id'] = photo_id
+    context['photo'] = photo
+    context['button_text'] =  'Add to Collection'
     if request.user.is_authenticated:
-        photo = get_object_or_404(Photo, pk=photo_id)
         collected_pic = Coll.objects.filter(user=request.user, photo=photo_id)
-        context['photo_id'] = photo_id
-        context['photo'] = photo
         if request.method == 'POST':
             if not collected_pic:
                 p = Photo.objects.get(id=photo_id)

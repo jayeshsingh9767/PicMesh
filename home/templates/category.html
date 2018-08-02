@@ -4,7 +4,6 @@
 {% block content %}
   {% load static %}
   <link rel="stylesheet" href="{% static 'home/categorystyle.css' %}">
-  {% if user.is_authenticated %}
     <h1 align="center">Check out some Photos from {{catObject}}</h1>
     <div class="sidebar">
       <h3>More Categories</h3>
@@ -20,10 +19,7 @@
         <a href="/details/{{ photo.id }}" class="boxCat"><img src="{{ photo.original_pic.url }}" alt="Image not found"></a>
       {% endfor %}
     </div>
-    {% else %}
       <p>You are not logged in</p>
       <a href="{% url 'login' %}">login</a>
-
-  {% endif %}
 
 {% endblock %}
