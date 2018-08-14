@@ -12,7 +12,7 @@
       {% for photo in trending_pics %}
         <div class="mySlides fade">
         <div class="numbertext">{{ forloop.counter }} / 5</div>
-        <a href="details/{{ photo.id }}"><img src="{{ photo.original_pic.url }}" alt="Image not found" style="width:100%"></a>
+        <a href="details/{{ photo.id }}"><img src="{{ photo.display_pic.url }}" alt="Image not found" style="width:100%"></a>
         <div class="text">{{ photo.title }}</div>
       </div>
       {% endfor %}
@@ -38,7 +38,7 @@
      <h1 class='category'>{{ cat_name_city }}</h1>
       <div class="row">
         {% for photo in city_pic %}
-          <a href=" /details/{{ photo.id }} "><img src="{{ photo.original_pic.url }}" alt="Image not Found" class="frame"></a>
+          <a href=" /details/{{ photo.id }} "><img src="{{ photo.display_pic.url }}" alt="Image not Found" class="frame"></a>
         {% endfor %}
         <a href="/categories/{{ cat_name_city.id }}"><div class="viewMore" alt="See More">&#x21e8;</div></a>
       </div>
@@ -46,7 +46,7 @@
       <h1 class='category'>{{ cat_name_nature }}</h1>
       <div class="row">
         {% for photo in nature_pic %}
-          <a href="/details/{{ photo.id }}"><img src="{{ photo.original_pic.url }}" alt="Image not Found" class="frame"></a>
+          <a href="/details/{{ photo.id }}"><img src="{{ photo.display_pic.url }}" alt="Image not Found" class="frame"></a>
         {% endfor %}
         <a href="/categories/{{ cat_name_nature.id }}"><div class="viewMore">&#x21e8;</div></a>
       </div>
@@ -54,7 +54,7 @@
       <h1 class='category'>{{ cat_name_animal }}</h1>
       <div class="row">
         {% for photo in animal_pic %}
-          <a href="/details/{{ photo.id }}"><img src="{{ photo.original_pic.url }}" alt="Image not Found" class="frame"></a>
+          <a href="/details/{{ photo.id }}"><img src="{{ photo.display_pic.url }}" alt="Image not Found" class="frame"></a>
         {% endfor %}
         <a href="/categories/{{ cat_name_animal.id }}"><div class="viewMore">&#x21e8;</div></a>
       </div>
@@ -62,7 +62,7 @@
       <h1 class='category'>{{ cat_name_brand }}</h1>
       <div class="row">
         {% for photo in brand_pic %}
-          <a href="/details/{{ photo.id }}"><img src="{{ photo.original_pic.url }}" alt="Image not Found" class="frame"></a>
+          <a href="/details/{{ photo.id }}"><img src="{{ photo.display_pic.url }}" alt="Image not Found" class="frame"></a>
         {% endfor %}
         <a href="/categories/{{ cat_name_brand.id }}"><div class="viewMore">&#x21e8;</div></a>
       </div>
@@ -70,7 +70,7 @@
       <h1 class='category'>{{ cat_name_mountain }}</h1>
       <div class="row">
         {% for photo in mountain_pic %}
-          <a href="/details/{{ photo.id }}"><img src="{{ photo.original_pic.url }}" alt="Image not Found" class="frame"></a>
+          <a href="/details/{{ photo.id }}"><img src="{{ photo.display_pic.url }}" alt="Image not Found" class="frame"></a>
         {% endfor %}
         <a href="/categories/{{ cat_name_mountain.id }}"><div class="viewMore">&#x21e8;</div></a>
       </div>
@@ -78,7 +78,7 @@
       <h1 class='category'>{{ cat_name_devotion }}</h1>
       <div class="row">
         {% for photo in devotion_pic %}
-          <a href="/details/{{ photo.id }}"><img src="{{ photo.original_pic.url }}" alt="Image not Found" class="frame"></a>
+          <a href="/details/{{ photo.id }}"><img src="{{ photo.display_pic.url }}" alt="Image not Found" class="frame"></a>
         {% endfor %}
         <a href="/categories/{{ cat_name_devotion.id }}"><div class="viewMore">&#x21e8;</div></a>
       </div>

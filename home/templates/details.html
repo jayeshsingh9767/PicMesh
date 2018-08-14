@@ -5,7 +5,7 @@
   {% load static %}
   <link rel="stylesheet" href="{% static 'home/detailstyle.css' %}">
       <h1 class='title' align="center">{{ photo.title }}</h1>
-      <img src="{{ photo.original_pic.url }}" alt="Image not Found">
+      <img src="{{ photo.display_pic.url }}" alt="Image not Found">
       <div class="buttonPanel">
         <a href="#" onclick="window.history.back();" class="but" align="center">Back</a>
         {% if user.is_authenticated %}
@@ -45,6 +45,5 @@
       <h2 align="center">Photographer : {{ photo.photographer }}</h2>
       <div class="desc"><p>{{ photo.description }}</p>
       </div>
-
 
 {% endblock %}

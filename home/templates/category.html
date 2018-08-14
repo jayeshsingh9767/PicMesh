@@ -16,10 +16,8 @@
     </div>
     <div class="containerCat">
       {% for photo in catPics %}
-        <a href="/details/{{ photo.id }}" class="boxCat"><img src="{{ photo.original_pic.url }}" alt="Image not found"></a>
+        <a href="/details/{{ photo.id }}" class="boxCat"><img src="{{ photo.display_pic.url }}" alt="Image not found"></a>
       {% endfor %}
     </div>
-      <p>You are not logged in</p>
-      <a href="{% url 'login' %}">login</a>
 
 {% endblock %}

@@ -9,7 +9,7 @@ body{
 
 header{
   background-color: #000;
-  height: 55px;
+  height: 53px;
 }
 
 /* Designing Menu and Menu Items */
@@ -26,12 +26,12 @@ header{
 }
 
 .menuItem{
-  width: 155px;
+  width: 13vw;
   text-align: center;
   margin: 5px;
   padding: 8px;
   list-style-type: none;
-  font-size: 24px;
+  font-size: 2vw;
   /* position: relative; */
 
 }

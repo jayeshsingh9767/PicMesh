@@ -1,5 +1,5 @@
 import zipfile
-
+from PIL import Image, ImageDraw, ImageFont
 from django.shortcuts import render,HttpResponse,get_object_or_404
 from .models import *
 from django.template import loader
@@ -9,6 +9,7 @@ from django.contrib.auth import get_user
 
 def cat_name(cname):
     return cat.get(category_name=cname)
+
 
 all_photos = Photo.objects.all()
 cat = Categories.objects.all()
@@ -57,7 +58,7 @@ def details(request, photo_id):
     photo = get_object_or_404(Photo, pk=photo_id)
     context['photo_id'] = photo_id
     context['photo'] = photo
-    context['button_text'] =  'Add to Collection'
+    context['button_text'] = 'Add to Collection'
     if request.user.is_authenticated:
         collected_pic = Coll.objects.filter(user=request.user, photo=photo_id)
         if request.method == 'POST':

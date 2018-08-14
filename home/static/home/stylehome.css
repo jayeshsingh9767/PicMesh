@@ -19,7 +19,6 @@ img {
   max-width: 90vw;
   height: 80vh;
   position: relative;
-
   margin: auto;
   margin-top:2vw;
 }
@@ -107,6 +106,10 @@ img {
 /* On smaller screens, decrease text size */
 @media only screen and (max-width: 300px) {
   .prev, .next,.text {font-size: 11px}
+}
+
+.banner img{
+   border-radius: 2vw;
 }
 
 /* Designing Greeting */
