@@ -6,10 +6,17 @@
   <link rel="stylesheet" href="{% static 'home/detailstyle.css' %}">
       <h1 class='title' align="center">{{ photo.title }}</h1>
       <img src="{{ photo.display_pic.url }}" alt="Image not Found">
+        <!--Tags and Price row-->
+        {% for tag in tag_list %}
+            <span class="tags">{{ tag }}</span>
+        {% endfor %}
+        <span id="price"> &#8377;{{ photo.price }}</span>
+        <br><br>
+
       <div class="buttonPanel">
         <a href="#" onclick="window.history.back();" class="but" align="center">Back</a>
         {% if user.is_authenticated %}
-            <form action="" method="post">
+            <form id="collectPic" action="" method="post">
               {% csrf_token %}
               <input type="submit" class="but" name="submit" value="{{ button_text }}"></submit>
             </form>
@@ -29,12 +36,13 @@
           <span onclick="document.getElementById('pay').style.display='none'" class="close" title="Close Modal">&times;</span>
           <p>You requested for buying Copyrights for this Photo <br>
             press the 'Complete Payment' Button to Continue the Payment <br>
-            The Original Picture will Start Downloading Once Payment is Successfull
+            The Original Picture will Start Downloading Once Payment is Successful
           </p>
-          <form class="paymentForm"  method="get" action="">
+          <form action=""></form>
+          <form class="paymentForm"  method="POST">
             {% csrf_token %}
             <a download="{{ photo.title }}" href="{{ photo.original_pic.url }}" title="{{ photo.title }}">
-               <input type="button" id="paymentButton" name="buy" value="Complete Payment"><br>
+                <button type="button" id="paymentButton" name="buy" value="Complete Payment"><br> Complete Payment </button>
             </a>
           </form>
           <p>Note: This is Dummy Payment Gateway for Testing Purpose.</p>
@@ -45,5 +53,8 @@
       <h2 align="center">Photographer : {{ photo.photographer }}</h2>
       <div class="desc"><p>{{ photo.description }}</p>
       </div>
+      <script>
+
+      </script>
 
 {% endblock %}

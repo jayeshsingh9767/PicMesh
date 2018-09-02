@@ -112,7 +112,7 @@ img {
    border-radius: 2vw;
 }
 
-/* Designing Greeting */
+/* Designing Greeting in Typewriter format*/
 #TextEffect{
   display: inline;
   font-size: 3.8vw;
@@ -134,6 +134,15 @@ img {
 }
 
 
+@keyframes cursorAnim {
+  0%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+
+  }
+}
 
 
 .row{

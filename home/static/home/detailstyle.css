@@ -13,6 +13,24 @@ img{
   height: 49vw;
 }
 
+/* Designing tags and Price */
+.tags{
+  font-size: 1.6vw;
+  margin-left: 1vw;
+  margin-right: 1vw;
+  /* border-style: groove; */
+  background-color: #cbd189;
+  position: relative;
+  left : 18vw;
+}
+
+#price{
+  font-size: 3vw;
+  position : absolute;
+  right : 23vw;
+}
+
+
 h2{
   font-size: 2.5vw;
   margin-top: 3vw;

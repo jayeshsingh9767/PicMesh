@@ -56,6 +56,8 @@ def home(request):
 def details(request, photo_id):
     template = loader.get_template('details.html')
     photo = get_object_or_404(Photo, pk=photo_id)
+    tag_list = photo.tags.split()
+    context['tag_list'] = tag_list
     context['photo_id'] = photo_id
     context['photo'] = photo
     context['button_text'] = 'Add to Collection'
@@ -102,6 +104,11 @@ def collection(request):
         return HttpResponse(template.render(context, request))
     else:
         return HttpResponse(template.render(context, request))
+
+
+def invoice(request):
+    template = loader.get_template('invoice.html')
+    return HttpResponse(template.render(context, request))
 
 
 

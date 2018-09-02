@@ -1,9 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from PIL import Image,ImageDraw,ImageFont
 
-from django.db.models.aggregates import Count
-from random import randint
+from PIL import Image, ImageDraw, ImageFont
 
 
 # Create your models here.
@@ -22,9 +20,9 @@ def watermark_image_with_text(filename):
     x = width / 5
     y = height / 6
     draw.text((x, y), text, color, font)
-    my_img = Image.alpha_composite(image, imageWatermark)
-    my_img.save('D:\Github\PicMesh\media\water_' + filename.name + '.png')
-    return 'D:\Github\PicMesh\media\water_' + filename.name + '.png'
+    my_image = Image.alpha_composite(image, imageWatermark)
+    my_image.convert('RGB').save('D:\Github\PicMesh\media\water_'+filename.name + '.png')
+    return 'D:\Github\PicMesh\media\water_'+filename.name + '.png'
 
 
 class Photo(models.Model):
@@ -33,6 +31,7 @@ class Photo(models.Model):
         ('JPG', 'JPG'),
         ('JPEG', 'JPEG'),
         ('Exif', 'Exif'),
+        ('TIF', 'TIF'),
         ('GIF', 'GIF'),
         ('WEBP', 'WEBP'),
         ('SVG', 'SVG'),
@@ -43,6 +42,7 @@ class Photo(models.Model):
     original_pic = models.ImageField()
     display_pic = models.ImageField(null=True, blank=True)
     description = models.CharField(max_length=1000)
+    price = models.PositiveIntegerField()
     photographer = models.ForeignKey('Photographer', on_delete=models.CASCADE)
     category = models.ForeignKey('Categories', on_delete=models.CASCADE, default=0)
 
@@ -50,7 +50,9 @@ class Photo(models.Model):
     def save(self, *args, **kwargs):
         if not self.pk:
             rotate_img_name = watermark_image_with_text(self.original_pic)
-            self.display_pic = rotate_img_name
+        else:
+            rotate_img_name = self.display_pic
+        self.display_pic = rotate_img_name
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -83,8 +85,10 @@ class Coll(models.Model):
         return self.photo.title
 
 
-
-
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, unique=False)
+    photo = models.ForeignKey('Photo', on_delete=models.CASCADE, unique=False)
+    order_date = models.DateField(auto_now=True)
 
 
 
