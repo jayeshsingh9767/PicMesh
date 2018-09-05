@@ -9,27 +9,64 @@ body{
 
 header{
   background-color: #000;
-  height: 53px;
+  height: 4vw;
+}
+/* Designing Logo */
+#logo{
+  color: #fff;
+  font-size: 4.3vw;
+  font-family:'Euphoria Script', cursive;
+  position: absolute;
+  top: -0.4vw;
+  left: 0.7vw;
+  animation-name: MultiColor;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#logo:hover{
+  animation-play-state: paused;
+}
+
+@keyframes MultiColor {
+  0%{
+    color: #fff;
+  }
+  20%{
+    color: rgb(203, 255, 80);
+  }
+  40%{
+    color: rgb(43, 132, 244);
+  }
+  60%{
+    color: rgb(231, 250, 76);
+  }
+  80%{
+    color: rgb(42, 255, 51);
+  }
+  100%{
+    color: rgb(239, 62, 249);
+  }
 }
 
 /* Designing Menu and Menu Items */
 
-#menuButton{
-  display: none;
-}
 
 .mainMenu{
   display: flex;
   margin: 0px;
   padding: 0px;
   justify-content: flex-end;
+
 }
 
 .menuItem{
   width: 13vw;
   text-align: center;
-  margin: 5px;
-  padding: 8px;
+  margin-top: 0.3vw;
+  padding: 0.4vw;
+  margin-left:3vw;
   list-style-type: none;
   font-size: 2vw;
   /* position: relative; */
@@ -81,7 +118,7 @@ header{
     box-shadow: 2px 2px 5px #707670;
     transition-duration: 0.7s;
     transition-timing-function:ease-in-out;
-    height:30px;
+    height: 2.8vw;
   }
 
 

@@ -3,6 +3,7 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'PicMesh/style.css' %}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Euphoria+Script" rel="stylesheet">
 
     <meta charset="UTF-8">
     <title>{% block title%}Title{% endblock %}</title>
@@ -22,9 +23,9 @@
 </head>
 <body id="body">
         <main>
+            <a href="{% url 'home' %}"><span id="logo">Picmesh</span></a>
             <header>
                 <ul class="mainMenu" id="menu">
-                  <li class="menuItem" id="home"><a href="{% url 'home' %}">Home</a></li>
                   <li class="menuItem" id="cat" onclick="document.getElementById('categories').style.display='block'"><a href="#">Categories</a></li>
                   <li class="menuItem" id="photographer"><a href="{% url 'photographer' %}">Photographer</a></li>
                   {% if user.is_authenticated %}
