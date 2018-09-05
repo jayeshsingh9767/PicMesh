@@ -10,5 +10,8 @@ urlpatterns = [
     url(r'^categories/(?P<cat_id>[0-9]+)/$', views.categories, name='categories'),
     path('collection/', views.collection, name='collection'),
     path('details/invoice', views.invoice, name='invoice'),
+    path('photographer/', views.photographer, name='photographer'),
+    url(r'^photographer/(?P<photographer_id>[0-9]+)/$', views.photographer_details, name='photographer_details')
+
 ]
 

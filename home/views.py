@@ -13,7 +13,7 @@ def cat_name(cname):
 
 all_photos = Photo.objects.all()
 cat = Categories.objects.all()
-auther = Photographer.objects.all()
+
 city_pic = Photo.objects.filter(category=cat.get(category_name='City'))
 nature_pic = Photo.objects.filter(category=cat.get(category_name='Nature'))
 brand_pic = Photo.objects.filter(category=cat.get(category_name='Brand Logo'))[:5]
@@ -27,7 +27,6 @@ trending_pics = all_photos[5:10]
 context = {
     'all_photos': all_photos,
     'cat': cat,
-    'auther': auther,
     'city_pic': city_pic,
     'brand_pic': brand_pic,
     'nature_pic': nature_pic,
@@ -64,6 +63,7 @@ def details(request, photo_id):
     if request.user.is_authenticated:
         collected_pic = Coll.objects.filter(user=request.user, photo=photo_id)
         if request.method == 'POST':
+            print('First Checkpoint...')
             if not collected_pic:
                 p = Photo.objects.get(id=photo_id)
                 c = Coll(user=request.user, photo=p)
@@ -104,6 +104,22 @@ def collection(request):
         return HttpResponse(template.render(context, request))
     else:
         return HttpResponse(template.render(context, request))
+
+
+def photographer(request):
+    author = Photographer.objects.all()
+    context['author'] = author
+    template = loader.get_template('photographer.html')
+    return HttpResponse(template.render(context, request))
+
+
+def photographer_details(request,photographer_id):
+    template = loader.get_template('photographerdetails.html')
+    photographer_object = get_object_or_404(Photographer, pk=photographer_id)
+    pics_by = all_photos.filter(photographer=photographer_id)
+    context['photographer_object'] = photographer_object
+    context['pics_by'] = pics_by
+    return HttpResponse(template.render(context, request))
 
 
 def invoice(request):

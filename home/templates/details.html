@@ -18,10 +18,10 @@
         {% if user.is_authenticated %}
             <form id="collectPic" action="" method="post">
               {% csrf_token %}
-              <input type="submit" class="but" name="submit" value="{{ button_text }}"></submit>
+              <input type="submit" class="but" id="collectButton" name="submit" value="{{ button_text }}"></submit>
             </form>
         {% else %}
-           <form action="/accounts/login/" method="get">
+           <form id="" action="/accounts/login/" method="get">
             {% csrf_token %}
             <input type="submit" class="but" name="submit" value="{{ button_text }}"></submit>
            </form>
@@ -50,10 +50,12 @@
       </div >
 
       </div>
-      <h2 align="center">Photographer : {{ photo.photographer }}</h2>
+      <h2 align="center">Photographer : <a href="/photographer/{{ photo.photographer.id }}">{{ photo.photographer }}</a></h2>
       <div class="desc"><p>{{ photo.description }}</p>
       </div>
       <script>
+
+
 
       </script>
 

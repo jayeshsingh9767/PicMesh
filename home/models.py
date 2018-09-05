@@ -61,6 +61,7 @@ class Photo(models.Model):
 
 class Photographer(models.Model):
     photographer_name = models.CharField(max_length=150)
+    profile_pic = models.ImageField(default='default-profile.png')
     city = models.CharField(max_length=50)
     email_id = models.EmailField()
     details = models.CharField(max_length=1000)
