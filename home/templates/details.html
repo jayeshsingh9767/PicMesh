@@ -27,7 +27,14 @@
            </form>
         {% endif %}
         {% if user.is_authenticated %}
-        <a href="#" class="but" align="center" onclick="document.getElementById('pay').style.display='block'">Buy Copyrights</a>
+          {% if order_exist %}
+            <a class="but" download="{{ photo.title }}" href="{{ photo.original_pic.url }}" title="{{ photo.title }}">
+                Download
+            </a>
+
+          {% else %}
+            <a href="#" class="but" align="center" onclick="document.getElementById('pay').style.display='block'">Buy Copyrights</a>
+          {% endif %}
         {% else %}
         <a href="/accounts/login/" class="but" align="center">Buy Copyrights</a>
         {% endif %}
@@ -39,11 +46,16 @@
             The Original Picture will Start Downloading Once Payment is Successful
           </p>
           <form action=""></form>
-          <form class="paymentForm"  method="POST">
+          <form class="paymentForm" name="paymentForm" action="/invoice/" onSubmit="return validate(document.paymentForm.card_number)"  method="POST">
             {% csrf_token %}
-            <a download="{{ photo.title }}" href="{{ photo.original_pic.url }}" title="{{ photo.title }}">
-                <button type="button" id="paymentButton" name="buy" value="Complete Payment"><br> Complete Payment </button>
-            </a>
+            <input type="hidden" name="photo_id" value="{{ photo.pk }}">
+            <input type="hidden" name="title" value="{{ photo.title }}">
+            <input type="hidden" name="price" value="{{ photo.price}}">
+            <input type="hidden" name="image_url" value="{{ photo.original_pic.url }}">
+            <label for="card"></label>Card Number :  <input type="text" id="card" name="card_number"><br>
+            <label class="label">Price </label><label id="price_label">₹{{ photo.price }}</label><br><br>
+            <label class="label">Taxes </label><label id="taxes_label">₹0.0</label><br>
+            <input type="submit" id="paymentButton" name="buy" value="Complete Payment"><br>
           </form>
           <p>Note: This is Dummy Payment Gateway for Testing Purpose.</p>
         </div>
@@ -55,6 +67,16 @@
       </div>
       <script>
 
+        function validate(card){
+        var regEx = /^\d{16}$/;
+        if(card.value.match(regEx)){
+            return true;
+        }
+        else{
+            alert("Invalid Card Number");
+            return false;
+        }
+        }
 
 
       </script>

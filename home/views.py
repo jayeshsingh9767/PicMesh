@@ -1,6 +1,6 @@
 import zipfile
 from PIL import Image, ImageDraw, ImageFont
-from django.shortcuts import render,HttpResponse,get_object_or_404
+from django.shortcuts import render,HttpResponse, get_object_or_404, HttpResponseRedirect
 from .models import *
 from django.template import loader
 from django.contrib.auth import get_user
@@ -56,6 +56,8 @@ def details(request, photo_id):
     template = loader.get_template('details.html')
     photo = get_object_or_404(Photo, pk=photo_id)
     tag_list = photo.tags.split()
+    order_exist = Order.objects.filter(user=request.user, photo=photo_id)
+    context['order_exist'] = order_exist
     context['tag_list'] = tag_list
     context['photo_id'] = photo_id
     context['photo'] = photo
@@ -113,7 +115,7 @@ def photographer(request):
     return HttpResponse(template.render(context, request))
 
 
-def photographer_details(request,photographer_id):
+def photographer_details(request, photographer_id):
     template = loader.get_template('photographerdetails.html')
     photographer_object = get_object_or_404(Photographer, pk=photographer_id)
     pics_by = all_photos.filter(photographer=photographer_id)
@@ -124,7 +126,30 @@ def photographer_details(request,photographer_id):
 
 def invoice(request):
     template = loader.get_template('invoice.html')
-    return HttpResponse(template.render(context, request))
+    if request.method == "POST":
+        photo_id = request.POST.get("photo_id", "Undefined")
+        photo_obj = Photo.objects.get(id=photo_id)
+        name = request.POST.get("title", "Undefined")      # Getting Data from form where name="title"
+        price = request.POST.get("price", "Undefined")
+        taxes = "0"
+        total_amount = int(price) + int(taxes)
+        image_url = request.POST.get("image_url", "Image not found")
+        card_number = request.POST.get("card_number", "Undefined")
+        order = Order(user=request.user, photo=photo_obj)
+        order.save()
+        print(get_user(request))
+        print(order, " ordered Successfully")
+        data = {"name": name,
+                "price": price,
+                "card_number": card_number,
+                "taxes": taxes,
+                "total_amount": total_amount,
+                "image_url": image_url,
+                "order": order.id
+                }
+
+        return HttpResponse(template.render(data, request))
+    return HttpResponseRedirect('/')
 
 
 

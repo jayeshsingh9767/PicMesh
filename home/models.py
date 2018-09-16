@@ -91,6 +91,9 @@ class Order(models.Model):
     photo = models.ForeignKey('Photo', on_delete=models.CASCADE, unique=False)
     order_date = models.DateField(auto_now=True)
 
+    def __str__(self):
+        return str(self.user)
+
 
 
 

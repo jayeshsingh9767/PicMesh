@@ -145,6 +145,24 @@ form{
 
 }
 
+input[name="card_number"]{
+   margin-bottom: 2vw;
+}
+
+.label{
+  float: left;
+
+}
+
+#price_label{
+
+  float: right;
+}
+
+#taxes_label{
+  float: right;
+}
+
 .paymentForm{
    display: inline-block;
   padding-top: 4vw;
@@ -162,7 +180,6 @@ label{
   font-size: 2vw;
   color: rgb(0, 0, 0);
   margin-top: 0px;
-  margin-bottom: 1.2vw;
 }
 
 #paymentButton{
