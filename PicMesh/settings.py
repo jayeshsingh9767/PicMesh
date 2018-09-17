@@ -139,4 +139,7 @@ TEMPLATES[0]['OPTIONS']['context_processors'].append("home.context_processors.ca
 # Adding context_processors.py to our Settings
 TEMPLATE_CONTEXT_PROCESSORS = ("custom_app.context_processors.categories_processor", )
 
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+
 
