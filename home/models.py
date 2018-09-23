@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.core.exceptions import ValidationError
 from PIL import Image, ImageDraw, ImageFont
 
 
@@ -8,21 +8,27 @@ from PIL import Image, ImageDraw, ImageFont
 
 # Algorithm for adding Watermark to Image
 def watermark_image_with_text(filename):
-    text = 'PicMesh'
-    color = 'blue'
-    fontfamily = 'arial.ttf'
-    image = Image.open(filename).convert('RGBA')
-    imageWatermark = Image.new('RGBA', image.size, (255, 255, 255, 0))
-    draw = ImageDraw.Draw(imageWatermark)
-    width, height = image.size
-    font = ImageFont.truetype(fontfamily, int(height / 20))
-    textWidth, textHeight = draw.textsize(text, font)
-    x = width / 5
-    y = height / 6
-    draw.text((x, y), text, color, font)
-    my_image = Image.alpha_composite(image, imageWatermark)
-    my_image.convert('RGB').save('D:\Github\PicMesh\media\water_'+filename.name + '.png')
-    return 'D:\Github\PicMesh\media\water_'+filename.name + '.png'
+    print(filename)
+    if ".TIF" in str(filename):
+        print('error Occoured')
+        raise ValidationError("Error ")
+    else:
+        print('Alright')
+        text = 'PicMesh'
+        color = 'blue'
+        fontfamily = 'arial.ttf'
+        image = Image.open(filename).convert('RGBA')
+        imageWatermark = Image.new('RGBA', image.size, (255, 255, 255, 0))
+        draw = ImageDraw.Draw(imageWatermark)
+        width, height = image.size
+        font = ImageFont.truetype(fontfamily, int(height / 20))
+        textWidth, textHeight = draw.textsize(text, font)
+        x = width / 5
+        y = height / 6
+        draw.text((x, y), text, color, font)
+        my_image = Image.alpha_composite(image, imageWatermark)
+        my_image.convert('RGB').save('D:\Github\PicMesh\media\water_'+filename.name + '.png')
+        return 'D:\Github\PicMesh\media\water_'+filename.name + '.png'
 
 
 class Photo(models.Model):
@@ -48,6 +54,7 @@ class Photo(models.Model):
 
     # Overwrites save method and set value of display_pic by default
     def save(self, *args, **kwargs):
+        print(self.original_pic)
         if not self.pk:
             rotate_img_name = watermark_image_with_text(self.original_pic)
         else:
