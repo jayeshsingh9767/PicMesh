@@ -12,7 +12,7 @@ class SignUpForm(UserCreationForm):
     # mobile_no = forms.RegexField(regex=r'^\+?1?\d{9,15}$')
     phone_regex = RegexValidator(regex=r'^\+?1?\d{12,12}$',
                                  message="Phone number must be entered in the format:"
-                                         " '+911234567890'. Up to 10 digits allowed.",)
+                                         " '+911234567890'. Up to 10 digits allowed.")
     mobile_no = forms.CharField(validators=[phone_regex], max_length=17, initial='+91')  # validators should be a list
 
     class Meta:

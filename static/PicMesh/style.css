@@ -249,28 +249,12 @@ header{
 
 #dynamic{
   min-height: 100%;
+  height: auto !important;
 }
 
-footer{
-  height: 8.5vw;
-  width:100%;
-  background-color: #000;
-}
-
-.footerText{
-  /* display: inline; */
-  color: #fff;
-  font-size: 1.25vw;
-  width: 80vw;
-}
-
-#copyright{
-  position: relative;
-  left: 10vw;
-}
-
-#creater{
-  position: absolute;
-  right: 7vw;
+#wrapper:after {
+  content: "";
+  display: block;
+  height: 8.5vw; /* the footer's total height */
 }
 

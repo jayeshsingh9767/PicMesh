@@ -56,13 +56,13 @@ def details(request, photo_id):
     template = loader.get_template('details.html')
     photo = get_object_or_404(Photo, pk=photo_id)
     tag_list = photo.tags.split()
-    order_exist = Order.objects.filter(user=request.user, photo=photo_id)
-    context['order_exist'] = order_exist
     context['tag_list'] = tag_list
     context['photo_id'] = photo_id
     context['photo'] = photo
     context['button_text'] = 'Add to Collection'
     if request.user.is_authenticated:
+        order_exist = Order.objects.filter(user=request.user, photo=photo_id)
+        context['order_exist'] = order_exist
         collected_pic = Coll.objects.filter(user=request.user, photo=photo_id)
         if request.method == 'POST':
             print('First Checkpoint...')
