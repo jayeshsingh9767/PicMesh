@@ -163,6 +163,10 @@ input[name="card_number"]{
   float: right;
 }
 
+#card{
+  width: 12vw
+}
+
 .paymentForm{
    display: inline-block;
   padding-top: 4vw;

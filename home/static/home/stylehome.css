@@ -103,10 +103,6 @@ img {
   to {opacity: 1}
 }
 
-/* On smaller screens, decrease text size */
-@media only screen and (max-width: 300px) {
-  .prev, .next,.text {font-size: 11px}
-}
 
 .banner img{
    border-radius: 2vw;
@@ -201,4 +197,25 @@ a{
   /* box-shadow: 5px 5px 10px #000000; */
    box-shadow: 0 8px 6px -6px black;
    /* box-shadow: 0px 9px 13px 5px rgba(102,94,102,0.66); */
+}
+
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 600px) {
+  .prev, .next,.text {font-size: 11px}
+  .row{
+    height: auto;
+    flex-direction: column;
+  }
+
+  .frame{
+    height: auto;
+    width: auto;
+    margin-top: 3vw;
+  }
+
+  .viewMore{
+    display: none;
+  }
+
 }

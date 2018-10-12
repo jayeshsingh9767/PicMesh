@@ -1,5 +1,3 @@
-import zipfile
-from PIL import Image, ImageDraw, ImageFont
 from django.shortcuts import render,HttpResponse, get_object_or_404, HttpResponseRedirect
 from .models import *
 from django.template import loader
@@ -13,38 +11,35 @@ def cat_name(cname):
 
 all_photos = Photo.objects.all()
 cat = Categories.objects.all()
-
-city_pic = Photo.objects.filter(category=cat.get(category_name='City'))
-nature_pic = Photo.objects.filter(category=cat.get(category_name='Nature'))
-brand_pic = Photo.objects.filter(category=cat.get(category_name='Brand Logo'))[:5]
-devotion_pic = Photo.objects.filter(category=cat.get(category_name='Devotional'))
-back_pic = Photo.objects.filter(category=cat.get(category_name='Background'))
-mountain_pic = Photo.objects.filter(category=cat.get(category_name='Mountains'))
-animal_pic = Photo.objects.filter(category=cat.get(category_name='Animals'))
-
 trending_pics = all_photos[5:10]
-
-context = {
-    'all_photos': all_photos,
-    'cat': cat,
-    'city_pic': city_pic,
-    'brand_pic': brand_pic,
-    'nature_pic': nature_pic,
-    'devotion_pic': devotion_pic,
-    'back_pic': back_pic,
-    'mountain_pic': mountain_pic,
-    'animal_pic': animal_pic,
-    'cat_name_city': cat_name('City'),
-    'cat_name_nature': cat_name('Nature'),
-    'cat_name_animal': cat_name('Animals'),
-    'cat_name_mountain': cat_name('Mountains'),
-    'cat_name_brand': cat_name('Brand Logo'),
-    'cat_name_devotion': cat_name('Devotional'),
-    'trending_pics': trending_pics
-}
 
 
 def home(request):
+    city_pic = Photo.objects.filter(category=cat.get(category_name='City'))[:5]
+    nature_pic = Photo.objects.filter(category=cat.get(category_name='Nature'))[:5]
+    brand_pic = Photo.objects.filter(category=cat.get(category_name='Brand Logo'))[:5]
+    devotion_pic = Photo.objects.filter(category=cat.get(category_name='Devotional'))[:5]
+    back_pic = Photo.objects.filter(category=cat.get(category_name='Background'))[:5]
+    mountain_pic = Photo.objects.filter(category=cat.get(category_name='Mountains'))[:5]
+    animal_pic = Photo.objects.filter(category=cat.get(category_name='Animals'))[:5]
+    context = {
+        'all_photos': all_photos,
+        'cat': cat,
+        'city_pic': city_pic,
+        'brand_pic': brand_pic,
+        'nature_pic': nature_pic,
+        'devotion_pic': devotion_pic,
+        'back_pic': back_pic,
+        'mountain_pic': mountain_pic,
+        'animal_pic': animal_pic,
+        'cat_name_city': cat_name('City'),
+        'cat_name_nature': cat_name('Nature'),
+        'cat_name_animal': cat_name('Animals'),
+        'cat_name_mountain': cat_name('Mountains'),
+        'cat_name_brand': cat_name('Brand Logo'),
+        'cat_name_devotion': cat_name('Devotional'),
+        'trending_pics': trending_pics
+    }
     template = loader.get_template('home.html')
     if request.user.is_authenticated:
         return HttpResponse(template.render(context, request))
@@ -53,6 +48,7 @@ def home(request):
 
 
 def details(request, photo_id):
+    context={}
     template = loader.get_template('details.html')
     photo = get_object_or_404(Photo, pk=photo_id)
     tag_list = photo.tags.split()
@@ -86,15 +82,18 @@ def details(request, photo_id):
 
 
 def categories(request, cat_id):
+    context = {}
     cat_obj = get_object_or_404(Categories, pk=cat_id)
     cat_pics = Photo.objects.filter(category=cat_id)
     template = loader.get_template('category.html')
+    context['cat'] = cat
     context['catObject'] = cat_obj
     context['catPics'] = cat_pics
     return HttpResponse(template.render(context, request))
 
 
 def collection(request):
+    context = {}
     template = loader.get_template('collection.html')
     if request.user.is_authenticated:
         coll = Coll.objects.filter(user=request.user)
@@ -109,6 +108,7 @@ def collection(request):
 
 
 def photographer(request):
+    context = {}
     author = Photographer.objects.all()
     context['author'] = author
     template = loader.get_template('photographer.html')
@@ -116,6 +116,7 @@ def photographer(request):
 
 
 def photographer_details(request, photographer_id):
+    context = {}
     template = loader.get_template('photographerdetails.html')
     photographer_object = get_object_or_404(Photographer, pk=photographer_id)
     pics_by = all_photos.filter(photographer=photographer_id)
