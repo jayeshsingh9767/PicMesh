@@ -30,7 +30,7 @@ def watermark_image_with_text(filename):
         my_image.convert('RGB').save('D:\Github\PicMesh\media\water_'+filename.name + '.png')
         return 'D:\Github\PicMesh\media\water_'+filename.name + '.png'
 
-
+# Model for Photo which contains details of Photos such as name, id, format,etc
 class Photo(models.Model):
     format_of_tags = (
         ('PNG', 'PNG'),
@@ -66,6 +66,7 @@ class Photo(models.Model):
         return self.title   # this Function adds name as Given Title
 
 
+# Model for Photo which contains details of Photographer
 class Photographer(models.Model):
     photographer_name = models.CharField(max_length=150)
     profile_pic = models.ImageField(default='default-profile.png')
@@ -77,6 +78,7 @@ class Photographer(models.Model):
         return self.photographer_name  # this Function adds name as Given Name of Photographer
 
 
+# Model for Photo which contains details of Category
 class Categories(models.Model):
     category_name = models.CharField(max_length=200)
     category_description = models.CharField(max_length=1000)
@@ -85,6 +87,7 @@ class Categories(models.Model):
         return self.category_name
 
 
+# Model for Photo which contains details of Collection of user
 class Coll(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, unique=False)
     photo = models.ForeignKey('Photo', on_delete=models.CASCADE, unique=False)
@@ -93,6 +96,7 @@ class Coll(models.Model):
         return self.photo.title
 
 
+# Model for Photo which contains details of Order table
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, unique=False)
     photo = models.ForeignKey('Photo', on_delete=models.CASCADE, unique=False)

@@ -5,16 +5,18 @@ from django.contrib.auth import get_user
 # Create your views here.
 
 
-def cat_name(cname):
+def cat_name(cname):                    # returns Category name
     return cat.get(category_name=cname)
 
 
-all_photos = Photo.objects.all()
-cat = Categories.objects.all()
-trending_pics = all_photos[5:10]
+all_photos = Photo.objects.all()            # gets all photos from Photo table
+cat = Categories.objects.all()              # gets all photos from Category table
+trending_pics = all_photos[5:10]            # select photo of id from 5 to 10
 
 
+# Logic for rendering Home Page
 def home(request):
+    # Getting Some photos of popular category
     city_pic = Photo.objects.filter(category=cat.get(category_name='City'))[:5]
     nature_pic = Photo.objects.filter(category=cat.get(category_name='Nature'))[:5]
     brand_pic = Photo.objects.filter(category=cat.get(category_name='Brand Logo'))[:5]
@@ -22,6 +24,7 @@ def home(request):
     back_pic = Photo.objects.filter(category=cat.get(category_name='Background'))[:5]
     mountain_pic = Photo.objects.filter(category=cat.get(category_name='Mountains'))[:5]
     animal_pic = Photo.objects.filter(category=cat.get(category_name='Animals'))[:5]
+    # Setting up context which will be used in template for data binding
     context = {
         'all_photos': all_photos,
         'cat': cat,
@@ -40,16 +43,17 @@ def home(request):
         'cat_name_devotion': cat_name('Devotional'),
         'trending_pics': trending_pics
     }
-    template = loader.get_template('home.html')
+    template = loader.get_template('home.html')         # Getting Template
     if request.user.is_authenticated:
         return HttpResponse(template.render(context, request))
     else:
         return HttpResponse(template.render(context, request))
 
 
+# Logic for rendering details Page
 def details(request, photo_id):
-    context={}
-    template = loader.get_template('details.html')
+    context = {}
+    template = loader.get_template('details.html')          # Getting Template
     photo = get_object_or_404(Photo, pk=photo_id)
     tag_list = photo.tags.split()
     context['tag_list'] = tag_list
@@ -81,6 +85,7 @@ def details(request, photo_id):
         return HttpResponse(template.render(context, request))
 
 
+# Logic for rendering Category Page
 def categories(request, cat_id):
     context = {}
     cat_obj = get_object_or_404(Categories, pk=cat_id)
@@ -92,6 +97,7 @@ def categories(request, cat_id):
     return HttpResponse(template.render(context, request))
 
 
+# Logic for rendering Collection Page
 def collection(request):
     context = {}
     template = loader.get_template('collection.html')
@@ -107,6 +113,7 @@ def collection(request):
         return HttpResponse(template.render(context, request))
 
 
+# Logic for rendering Photographer Page
 def photographer(request):
     context = {}
     author = Photographer.objects.all()
@@ -115,6 +122,7 @@ def photographer(request):
     return HttpResponse(template.render(context, request))
 
 
+# Logic for rendering Photographer details Page
 def photographer_details(request, photographer_id):
     context = {}
     template = loader.get_template('photographerdetails.html')
@@ -125,13 +133,14 @@ def photographer_details(request, photographer_id):
     return HttpResponse(template.render(context, request))
 
 
+# Logic for rendering invoice Page
 def invoice(request):
     template = loader.get_template('invoice.html')
     if request.method == "POST":
         photo_id = request.POST.get("photo_id", "Undefined")
         photo_obj = Photo.objects.get(id=photo_id)
-        name = request.POST.get("title", "Undefined")      # Getting Data from form where name="title"
-        price = request.POST.get("price", "Undefined")
+        name = request.POST.get("title", "Undefined")       # Getting Data from form where name="title"
+        price = request.POST.get("price", "Undefined")      # Getting Data from form where name="price"
         taxes = "0"
         total_amount = int(price) + int(taxes)
         image_url = request.POST.get("image_url", "Image not found")
